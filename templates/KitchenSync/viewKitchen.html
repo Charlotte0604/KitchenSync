@@ -4,11 +4,11 @@
     <div class="container">
         <h2>Current Items in Kitchen</h2>
         <ul>
-            {% for item in items %}
-                <li>{{ item.name }} - {{ item.quantity }}</li>
-            {% empty %}
-                <li>No items found in the kitchen.</li>
-            {% endfor %}
+        {% for ui in user_ingredients %}
+            <li>{{ ui.ingredient.name }} - {{ ui.quantity }}</li>
+        {% empty %}
+            <li>No ingredients saved yet.</li>
+        {% endfor %}
         </ul>
 
         <a href="{% url 'addKitchen' %}">Add New Item</a>

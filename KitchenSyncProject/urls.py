@@ -21,7 +21,7 @@ from KitchenSync import views
 urlpatterns = [
     path('', views.home, name='home'), 
     path('addKitchen/', views.addKitchen, name='addKitchen'),        
-    path('login/', views.login, name='login'), 
+    path('login/', views.userLogin, name='login'), 
     path('register/', views.register, name='register'),        
     path('weeklyPlanner/', views.weeklyPlanner, name='weeklyPlanner'), 
     path('viewKitchen/', views.viewKitchen, name='viewKitchen'),       
