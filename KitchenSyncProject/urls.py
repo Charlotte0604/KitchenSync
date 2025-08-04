@@ -19,6 +19,11 @@ from django.urls import path
 from KitchenSync import views
 
 urlpatterns = [
-    path('', views.home, name='home'),                 
+    path('', views.home, name='home'), 
+    path('addKitchen/', views.addKitchen, name='addKitchen'),        
+    path('login/', views.login, name='login'), 
+    path('register/', views.register, name='register'),        
+    path('weeklyPlanner/', views.weeklyPlanner, name='weeklyPlanner'), 
+    path('viewKitchen/', views.viewKitchen, name='viewKitchen'),       
     path('admin/', admin.site.urls),                           
 ]

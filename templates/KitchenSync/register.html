@@ -1,0 +1,26 @@
+{% extends 'KitchenSync/base.html' %}
+
+{%block body_block %}
+    <div class="bio" id="highlight">
+        <h1>
+            Register with Scrandemonium
+        </h1>
+    
+        {% if registered %}
+            Thank you for registering with us
+            <a href="{% url 'Home' %}">Return to our homepage to get syncing!</a>
+        {% else %}
+    
+        Enter you details below
+    </div>
+
+    <form id="user_form" class="register" method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+
+        <input type="submit" name="submit" value="Register Here!" />
+    </form>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'KitchenSync/base.html' %}
+
+{%block body_block %}
+    <div class="container">
+        <h2>Current Items in Kitchen</h2>
+        <ul>
+            {% for item in items %}
+                <li>{{ item.name }} - {{ item.quantity }}</li>
+            {% empty %}
+                <li>No items found in the kitchen.</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'addKitchen' %}">Add New Item</a>
+    </div>
+{% endblock %}

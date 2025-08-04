@@ -1,0 +1,80 @@
+{% extends 'KitchenSync/base.html' %}
+{%block body_block %}
+    <div class="container">
+        <div class="row">
+            <div class ="col-sm-6">
+                 <h2>Add New Items to Kitchen</h2>
+                 <form method="post">
+                    {% csrf_token %}
+
+                    <!-- INGREDIENT SELECTION -->
+                    <label for="ingredient-select">Ingredients:</label>
+                    <select id="ingredient-select" multiple="multiple">
+                        {% for ingredient in all_ingredients %}
+                            <option value="{{ ingredient.name }}">{{ ingredient.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <!-- Ingredient list with quantity inputs will appear here -->
+                    <div id="ingredient-list" class="mt-2"></div>
+
+                    <br>
+                        <button type="submit">Add Ingredient</button>
+                    </br>
+                </form>
+            </div>
+            <div class ="col-sm-6">
+                <h2>Upload Photo to Kitchen</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="kitchen_photo" accept="image/*" required>
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+                
+<!-- Include jQuery and Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    const selectedIngredients = new Set();
+
+    // Initialize Select2
+    $('#ingredient-select').select2({
+      tags: true,
+      placeholder: 'Select or add ingredients',
+      width: '100%',
+    });
+
+    // When an ingredient is selected
+    $('#ingredient-select').on('select2:select', function (e) {
+      const name = e.params.data.text;
+      if (!selectedIngredients.has(name)) {
+        selectedIngredients.add(name);
+
+        const html = `
+          <div class="ingredient-entry" data-name="${name}">
+            <input type="hidden" name="ingredients" value="${name}">
+            <label>${name}:</label>
+            <input type="text" name="quantity_${name}" placeholder="e.g., 100 grams" required>
+          </div>
+        `;
+        $('#ingredient-list').append(html);
+      }
+    });
+
+    // When an ingredient is deselected
+    $('#ingredient-select').on('select2:unselect', function (e) {
+      const name = e.params.data.text;
+      selectedIngredients.delete(name);
+      $(`.ingredient-entry[data-name="${name}"]`).remove();
+    });
+  });
+</script>
+
+{% endblock %}
+        
